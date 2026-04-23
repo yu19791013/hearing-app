@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>お困りごとヒアリング</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link rel="manifest" href="manifest.json">
+<script>
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("service-worker.js");
+}
+</script>
+
+<style>
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: #eef1f5;
+  margin: 0;
+}
+.app {
+  max-width: 480px;
+  margin: auto;
+  padding: 20px;
+}
+h1 {
+  text-align: center;
+  font-size: 26px;
+  margin-bottom: 20px;
+  color: #0078ff;
+}
+.card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+label {
+  display: block;
+  padding: 14px;
+  margin: 10px 0;
+  background: #fafafa;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  font-size: 18px;
+}
+button {
+  width: 100%;
+  padding: 18px;
+  font-size: 20px;
+  border: none;
+  border-radius: 14px;
+  background: #0078ff;
+  color: #fff;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(0,120,255,0.3);
+}
+#result {
+  white-space: pre-wrap;
+  background: #fff;
+  padding: 20px;
+  border-radius: 18px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<h1>お困りごとヒアリング</h1>
+
+<div class="card">
+  <p>当てはまるところにチェックしてください。</p>
+
+  <label><input type="checkbox" class="chk" value="作業に時間がかかっている"> 作業に時間がかかっている</label>
+  <label><input type="checkbox" class="chk" value="ミスが起きやすい"> ミスが起きやすい</label>
+  <label><input type="checkbox" class="chk" value="同じ作業を何度もしている"> 同じ作業を何度もしている</label>
+  <label><input type="checkbox" class="chk" value="必要な情報がすぐ見つからない"> 必要な情報がすぐ見つからない</label>
+  <label><input type="checkbox" class="chk" value="社内共有がうまくいっていない"> 社内共有がうまくいっていない</label>
+  <label><input type="checkbox" class="chk" value="お客様対応で困ることがある"> お客様対応で困ることがある</label>
+  <label><input type="checkbox" class="chk" value="会議のメモ・議事録が大変"> 会議のメモ・議事録が大変</label>
+  <label><input type="checkbox" class="chk" value="資料作成が負担"> 資料作成が負担</label>
+  <label><input type="checkbox" class="chk" value="データ整理や分析が苦手"> データ整理や分析が苦手</label>
+</div>
+
+<button onclick="generate()">提案書を作る</button>
+
+<h2>▼ 自動生成された提案書</h2>
+<div id="result">（ここに提案書が表示されます）</div>
+
+</div>
+
+<script>
+function generate() {
+  const checks = document.querySelectorAll('.chk:checked');
+  let text = "【ご提案書（自動生成）】\n\n";
+
+  text += "■ お困りごと（チェックされた項目）\n";
+  if (checks.length === 0) {
+    text += "・特にチェックはありませんでした。\n";
+  } else {
+    checks.forEach(c => {
+      text += "・" + c.value + "\n";
+    });
+  }
+
+  text += "\n■ 改善できるポイント\n";
+  text += "・作業時間の短縮\n";
+  text += "・ミスの減少\n";
+  text += "・情報探しの時間削減\n";
+  text += "・共有のしやすさ向上\n";
+  text += "・会議・資料作成の負担軽減\n";
+
+  text += "\n■ 次のステップ\n";
+  text += "1. 詳しい状況を少しだけヒアリング\n";
+  text += "2. 改善案のご提案\n";
+  text += "3. 小さく試す（PoC）\n";
+
+  document.getElementById("result").textContent = text;
+}
+</script>
+
+</body>
+</html>
